@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title></title>
+</head>
+
+<body>
+  
+</body>
+
+</html><!DOCTYPE html>
+<html>
+<head>
+  <title>For Akansha 💖</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      text-align: center;
+      background: linear-gradient(135deg, #ffd6e0, #ffeef2);
+      color: #333;
+      overflow: hidden;
+    }
+
+    .page {
+      display: none;
+      margin-top: 40%;
+    }
+
+    .active {
+      display: block;
+      animation: fade 0.6s ease;
+    }
+
+    @keyframes fade {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    button {
+      padding: 12px 22px;
+      margin: 10px;
+      border: none;
+      border-radius: 20px;
+      background: #ff8fab;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+    }
+
+    button:hover {
+      background: #ff5d8f;
+    }
+
+    #noBtn {
+      position: relative;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      pointer-events: none;
+    }
+  </style>
+</head>
+<body>
+
+<canvas id="fireworks"></canvas>
+
+<div id="page1" class="page active">
+  <h2>Hey Akansha... 💕</h2>
+  <p>I want to tell you something 😊</p>
+  <button onclick="nextPage(2)">Ok</button>
+</div>
+
+<div id="page2" class="page">
+  <h2>Do you like me? 😏</h2>
+  <button onclick="nextPage(3)">Yes 😄</button>
+  <button onclick="nextPage(3)">Yes 😄</button>
+</div>
+
+<div id="page3" class="page">
+  <h2>Will you be my girlfriend? 💖</h2>
+  <button onclick="yesClick()">Yes 🥺</button>
+  <button id="noBtn" onclick="noClick()">No 😅</button>
+</div>
+
+<div id="page4" class="page">
+  <h2>Yayyy 😭💖</h2>
+  <p>You just made me the happiest person 🥰</p>
+</div>
+
+<script>
+let noCount = 0;
+
+function nextPage(page) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page' + page).classList.add('active');
+}
+
+function yesClick() {
+  nextPage(4);
+  startFireworks();
+}
+
+function noClick() {
+  noCount++;
+
+  let noBtn = document.getElementById("noBtn");
+
+  if (noCount === 1) {
+    noBtn.innerText = "Are you sure? 😢";
+  } else if (noCount === 2) {
+    noBtn.innerText = "Think again 🥺";
+  } else if (noCount === 3) {
+    noBtn.innerText = "Last chance 😭";
+  }
+
+  if (noCount >= 4) {
+    let x = Math.random() * (window.innerWidth - 100);
+    let y = Math.random() * (window.innerHeight - 50);
+
+    noBtn.style.position = "absolute";
+    noBtn.style.left = x + "px";
+    noBtn.style.top = y + "px";
+  }
+}
+
+/* 🎆 Fireworks */
+const canvas = document.getElementById("fireworks");
+const ctx = canvas.getContext("2d");
+
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+
+let particles = [];
+
+function createFirework(x, y) {
+  for (let i = 0; i < 50; i++) {
+    particles.push({
+      x: x,
+      y: y,
+      speedX: (Math.random() - 0.5) * 6,
+      speedY: (Math.random() - 0.5) * 6,
+      life: 100
+    });
+  }
+}
+
+function updateFireworks() {
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+  particles.forEach((p, i) => {
+    p.x += p.speedX;
+    p.y += p.speedY;
+    p.life--;
+
+    ctx.beginPath();
+    ctx.arc(p.x, p.y, 2, 0, Math.PI * 2);
+    ctx.fillStyle = "pink";
+    ctx.fill();
+
+    if (p.life <= 0) particles.splice(i, 1);
+  });
+
+  requestAnimationFrame(updateFireworks);
+}
+
+function startFireworks() {
+  setInterval(() => {
+    createFirework(
+      Math.random() * canvas.width,
+      Math.random() * canvas.height / 2
+    );
+  }, 500);
+
+  updateFireworks();
+}
+</script>
+
+</body>
+</html
